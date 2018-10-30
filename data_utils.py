@@ -47,3 +47,19 @@ def _get_label_dict(files):
     label_dict = dict(enumerate(labels))
     label_dict = {v: k for k, v in label_dict.items()}
     return label_dict
+
+def load_genre_specifit_data(img_dir):
+    features, labels = load_data(img_dir)
+    label_set = set()
+    for label in labels:
+        label_set.add(str(label))
+    features_by_genre_dict = {}
+    for label in label_set:
+        features_by_genre_dict[label] = []
+        for f, l in zip(features, labels):
+            # print(str(l))
+            if str(l) == label:
+                # print('OMG')
+                features_by_genre_dict[label].append(f)
+        features_by_genre_dict[label] = np.array(features_by_genre_dict[label])
+    return features_by_genre_dict
