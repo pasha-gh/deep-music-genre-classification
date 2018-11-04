@@ -18,6 +18,7 @@ NUM_GPUS = 4
 
 NUM_CLASSES = 7
 
+HIDDEN_SIZE = 50
 L2_LAMBDA = 0.001
 LEARNING_RATE = 1e-5
 
@@ -29,7 +30,7 @@ def generate_model():
     model = models.Sequential()
     model.add(conv_base)
     model.add(layers.Flatten())
-    model.add(layers.Dense(50, name='dense', kernel_regularizer=regularizers.l2(L2_LAMBDA)))
+    model.add(layers.Dense(HIDDEN_SIZE, name='dense', kernel_regularizer=regularizers.l2(L2_LAMBDA)))
     model.add(layers.Dropout(rate=0.3, name='dropout'))
     model.add(layers.Dense(NUM_CLASSES, activation='softmax', name='dense_output'))
     model = multi_gpu_model(model, gpus=NUM_GPUS)
