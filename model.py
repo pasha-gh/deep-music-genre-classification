@@ -40,7 +40,7 @@ def generate_model():
     print(model.summary())
     return model
 
-def generate_dataset(img_dir, sess):
+def generate_labeled_dataset(img_dir, sess):
     features, labels = data_utils.load_data(img_dir)
     features_placeholder = tf.placeholder(features.dtype, features.shape)
     labels_placeholder = tf.placeholder(labels.dtype, labels.shape)
@@ -80,6 +80,6 @@ def train_and_validate(model, train_dataset, val_dataset):
 if __name__=='__main__':
     with tf.Session() as sess:
         model = generate_model()
-        train_dataset = generate_dataset(TRAIN_IMG_DIR, sess)
-        val_dataset = generate_dataset(VAL_IMG_DIR, sess)
+        train_dataset = generate_labeled_dataset(TRAIN_IMG_DIR, sess)
+        val_dataset = generate_labeled_dataset(VAL_IMG_DIR, sess)
         train_and_validate(model, train_dataset, val_dataset)
